@@ -58,6 +58,9 @@ public class Player : MovingObject
 
     protected override void AttemptMove <T> (int horizontal, int vertical)
     {
+        food -= 10;
+        foodText.text = "Food: " + food;
+
         base.AttemptMove <T> (horizontal, vertical);
         GameManager.instance.playerTurn = false;
     }
@@ -76,6 +79,7 @@ public class Player : MovingObject
         if (collision.tag == "Exit")
         {
             Invoke("Restart", restartLevelDelay);
+            enabled = false;
         }
         else if (collision.tag == "Food")
         {
