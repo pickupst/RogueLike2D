@@ -8,6 +8,8 @@ public class Player : MovingObject
 
     public int wallDamage = 1;
 
+    public float restartLevelDelay = 1f;
+
     protected override void Awake()
     {
         animator = GetComponent<Animator>();
@@ -62,7 +64,7 @@ public class Player : MovingObject
     {
         if (collision.tag == "Exit")
         {
-
+            Invoke("Restart", restartLevelDelay);
         }
         else if (collision.tag == "Food")
         {
@@ -72,5 +74,10 @@ public class Player : MovingObject
         {
             collision.gameObject.SetActive(false);
         }
+    }
+
+    private void Restart()
+    {
+        Application.LoadLevel(Application.loadedLevel);
     }
 }
