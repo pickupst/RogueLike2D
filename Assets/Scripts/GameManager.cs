@@ -11,6 +11,13 @@ public class GameManager : MonoBehaviour
 
     public int level = 3;
 
+    [HideInInspector]
+    public bool playerTurn = true;
+    [HideInInspector]
+    public bool enemiesMoving;
+
+    public float turnDelay = 1f;
+
     private void Awake()
     {
         if (instance == null)
@@ -42,6 +49,22 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (playerTurn || enemiesMoving)
+        {
+            return;
+        }
+
+        StartCoroutine(MoveEnemies());
+
+    }
+
+     IEnumerator MoveEnemies()
+    {
+        enemiesMoving = true;
+
+        yield return new WaitForSeconds(turnDelay);
+
+        playerTurn = true;
+        enemiesMoving = false;
     }
 }
