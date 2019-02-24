@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Enemy : MovingObject
 {
-
+    private Animator animator;
     private Transform target;
 
     protected override void Awake()
@@ -12,13 +12,14 @@ public class Enemy : MovingObject
         GameManager.instance.AddEnemyToList(this);
 
         target = GameObject.FindGameObjectWithTag("Player").transform;
+        animator = GetComponent<Animator>();
 
         base.Awake();
     }
 
     protected override void OnCantMove<T>(T component)
     {
-        
+        animator.SetTrigger("EnemyAttack");
     }
 
     public void MoveEnemy()

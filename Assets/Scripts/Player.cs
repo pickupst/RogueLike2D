@@ -57,4 +57,20 @@ public class Player : MovingObject
         animator.SetTrigger("PlayerChop");
 
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "Exit")
+        {
+
+        }
+        else if (collision.tag == "Food")
+        {
+            collision.gameObject.SetActive(false);
+        }
+        else if (collision.tag == "Soda")
+        {
+            collision.gameObject.SetActive(false);
+        }
+    }
 }

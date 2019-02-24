@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     public static GameManager instance = null;
 
     
-    public int level = 3;
+    public int level = 8;
 
     [HideInInspector]
     public bool playerTurn = true;
