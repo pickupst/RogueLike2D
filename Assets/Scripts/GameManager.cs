@@ -9,10 +9,13 @@ public class GameManager : MonoBehaviour
 
     private List<Enemy> enemies;
 
-    public static GameManager instance = null;
 
+    //------------------------------------------
+
+    public static GameManager instance = null;
     
     public int level = 8;
+    public int foodPoints = 100;
 
     [HideInInspector]
     public bool playerTurn = true;
