@@ -6,6 +6,7 @@ public class Enemy : MovingObject
 {
     private Animator animator;
     private Transform target;
+    private bool skipMove;
 
     public int playerDamage = 30;
     protected override void Awake()
@@ -41,6 +42,19 @@ public class Enemy : MovingObject
         }
 
         AttemptMove<Player>(xDir, yDir);
+    }
+
+    protected override void AttemptMove<T>(int horizontal, int vertical)
+    {
+
+        if (skipMove)
+        {
+            skipMove = false;
+            return;
+        }
+
+        base.AttemptMove<T>(horizontal, vertical);
+        skipMove = true;
     }
 
     // Start is called before the first frame update

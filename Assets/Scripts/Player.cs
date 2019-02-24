@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -62,7 +63,18 @@ public class Player : MovingObject
         foodText.text = "Food: " + food;
 
         base.AttemptMove <T> (horizontal, vertical);
+
+        CheckIfGameOver();
+
         GameManager.instance.playerTurn = false;
+    }
+
+    private void CheckIfGameOver()
+    {
+        if (food <= 0)
+        {
+            GameManager.instance.GameOver();
+        }
     }
 
     protected override void OnCantMove <T> (T component)
