@@ -11,11 +11,13 @@ public class GameManager : MonoBehaviour
 
     private GameObject levelImage;
 
+    private Text levelText;
+
     //------------------------------------------
 
     public static GameManager instance = null;
     
-    public int level = 8;
+    public int level = 1;
     public int foodPoints = 100;
 
     [HideInInspector]
@@ -23,9 +25,15 @@ public class GameManager : MonoBehaviour
     [HideInInspector]
     public bool enemiesMoving;
 
-    public float turnDelay = 0.1f;
+    public float turnDelay = 0.5f;
     public float levelStartDelay = 2f;
 
+
+    private void OnLevelWasLoaded(int index)
+    {
+        level++;
+        InitGame();
+    }
 
     private void Awake()
     {
@@ -40,6 +48,8 @@ public class GameManager : MonoBehaviour
 
         enemies = new List<Enemy>();
 
+        DontDestroyOnLoad(gameObject);
+
         boardScript = GetComponent<BoardManager>();
 
         InitGame(); 
@@ -49,10 +59,15 @@ public class GameManager : MonoBehaviour
     private void InitGame()
     {
         levelImage = GameObject.Find("LevelImage");
+        levelText = GameObject.Find("LevelText").GetComponent<Text>();
+        levelText.text = "Day: " + level;
 
         Invoke("HideLevelImage", levelStartDelay);
 
+        enemies.Clear();
+
         boardScript.SetupScene(level);
+
     }
 
     private void HideLevelImage ()
