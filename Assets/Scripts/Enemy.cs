@@ -7,6 +7,7 @@ public class Enemy : MovingObject
     private Animator animator;
     private Transform target;
 
+    public int playerDamage = 30;
     protected override void Awake()
     {
         GameManager.instance.AddEnemyToList(this);
@@ -19,6 +20,9 @@ public class Enemy : MovingObject
 
     protected override void OnCantMove<T>(T component)
     {
+        Player hitPlayer = component as Player;
+        hitPlayer.LoseFood(playerDamage);
+
         animator.SetTrigger("EnemyAttack");
     }
 

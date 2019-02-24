@@ -7,8 +7,8 @@ public class Player : MovingObject
 {
     Animator animator;
     int food;
-    private int pointsPerSoda = 20;
-    private int pointsPerFood = 10;
+    private int pointsPerSoda = 50;
+    private int pointsPerFood = 30;
 
     //-------------------------
 
@@ -100,5 +100,17 @@ public class Player : MovingObject
     private void Restart()
     {
         Application.LoadLevel(Application.loadedLevel);
+    }
+
+    private void OnDisable()
+    {
+        GameManager.instance.foodPoints = food;
+    }
+
+    public void LoseFood(int point)
+    {
+        animator.SetTrigger("PlayerHit");
+        food -= point;
+        foodText.text = "Food: " + food;
     }
 }

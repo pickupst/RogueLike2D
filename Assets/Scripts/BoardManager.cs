@@ -20,7 +20,7 @@ public class BoardManager : MonoBehaviour
     }
 
     public Count wallCount = new Count(5, 7);
-    public Count foodCount = new Count(3, 5);
+    public Count foodCount = new Count(10, 15);
 
     public GameObject[] floorTiles;
     public GameObject[] outerWallTiles;
