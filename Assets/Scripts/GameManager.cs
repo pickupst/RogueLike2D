@@ -1,4 +1,4 @@
-﻿using System;
+﻿using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
 
     private List<Enemy> enemies;
 
+    private GameObject levelImage;
 
     //------------------------------------------
 
@@ -23,6 +24,8 @@ public class GameManager : MonoBehaviour
     public bool enemiesMoving;
 
     public float turnDelay = 0.1f;
+    public float levelStartDelay = 2f;
+
 
     private void Awake()
     {
@@ -45,7 +48,16 @@ public class GameManager : MonoBehaviour
 
     private void InitGame()
     {
+        levelImage = GameObject.Find("LevelImage");
+
+        Invoke("HideLevelImage", levelStartDelay);
+
         boardScript.SetupScene(level);
+    }
+
+    private void HideLevelImage ()
+    {
+        levelImage.SetActive(false);
     }
 
     // Update is called once per frame
