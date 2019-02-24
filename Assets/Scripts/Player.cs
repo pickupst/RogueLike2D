@@ -19,6 +19,14 @@ public class Player : MovingObject
 
     public Text foodText;
 
+    public AudioClip moveSound1;
+    public AudioClip moveSound2;
+    public AudioClip eatSound1;
+    public AudioClip eatSound2;
+    public AudioClip dringSound1;
+    public AudioClip dringSound2;
+    public AudioClip gameOverSound;
+
     protected override void Awake()
     {
         animator = GetComponent<Animator>();
@@ -63,6 +71,12 @@ public class Player : MovingObject
         foodText.text = "Food: " + food;
 
         base.AttemptMove <T> (horizontal, vertical);
+        RaycastHit2D hit;
+
+        if (Move(horizontal, vertical, out hit))
+        {
+            SoundManager.instance.RandomizeSfx(moveSound1, moveSound2);
+        }
 
         CheckIfGameOver();
 
@@ -73,6 +87,8 @@ public class Player : MovingObject
     {
         if (food <= 0)
         {
+            SoundManager.instance.PlaySingle(gameOverSound);
+            SoundManager.instance.musicSource.Stop();
             GameManager.instance.GameOver();
         }
     }
@@ -95,6 +111,8 @@ public class Player : MovingObject
         }
         else if (collision.tag == "Food")
         {
+            SoundManager.instance.RandomizeSfx(eatSound1, eatSound2);
+
             food += pointsPerFood;
             foodText.text = "Food: " + food;
 
@@ -102,6 +120,8 @@ public class Player : MovingObject
         }
         else if (collision.tag == "Soda")
         {
+            SoundManager.instance.RandomizeSfx(dringSound1, dringSound2);
+
             food += pointsPerSoda;
             foodText.text = "Food: " + food;
 
@@ -124,5 +144,7 @@ public class Player : MovingObject
         animator.SetTrigger("PlayerHit");
         food -= point;
         foodText.text = "Food: " + food;
+
+        CheckIfGameOver();
     }
 }
